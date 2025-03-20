@@ -10,10 +10,21 @@ from .coordinator import NeoWatcherCoordinator
 
 _LOGGER = logging.getLogger(__name__)
 
+
 async def async_setup_entry(hass, config_entry, async_add_entities):
     """Set up the NEO Watcher sensor."""
-    coordinator = hass.data[DOMAIN][config_entry.entry_id]
-    async_add_entities([NEOWatcherSensor(coordinator)])
+    coordinator = NeoWatcherCoordinator(
+        hass, config_entry.data[CONF_NEO_ID], config_entry.data[CONF_API_KEY]
+    )
+    await coordinator.async_config_entry_first_refresh()
+    async_add_entities(
+        [
+            NEOWatcherSensor(coordinator),
+            NEOWatcherRateLimitSensor(coordinator, "X-RateLimit-Limit"),
+            NEOWatcherRateLimitSensor(coordinator, "X-RateLimit-Remaining"),
+        ]
+    )
+
 
 class NEOWatcherSensor(CoordinatorEntity, SensorEntity):
     """Representation of a NEO Watcher sensor."""
@@ -42,18 +53,40 @@ class NEOWatcherSensor(CoordinatorEntity, SensorEntity):
             return {
                 "nasa_jpl_url": data.get("nasa_jpl_url"),
                 "absolute_magnitude_h": data.get("absolute_magnitude_h"),
-                "estimated_diameter_min_km": data.get("estimated_diameter", {}).get("kilometers", {}).get("estimated_diameter_min"),
-                "estimated_diameter_max_km": data.get("estimated_diameter", {}).get("kilometers", {}).get("estimated_diameter_max"),
-                "estimated_diameter_min_mi": data.get("estimated_diameter", {}).get("miles", {}).get("estimated_diameter_min"),
-                "estimated_diameter_max_mi": data.get("estimated_diameter", {}).get("miles", {}).get("estimated_diameter_max"),
-                "is_potentially_hazardous_asteroid": data.get("is_potentially_hazardous_asteroid"),
+                "estimated_diameter_min_km": data.get("estimated_diameter", {}).get(
+                    "kilometers", {}
+                ).get("estimated_diameter_min"),
+                "estimated_diameter_max_km": data.get("estimated_diameter", {}).get(
+                    "kilometers", {}
+                ).get("estimated_diameter_max"),
+                "estimated_diameter_min_mi": data.get("estimated_diameter", {}).get(
+                    "miles", {}
+                ).get("estimated_diameter_min"),
+                "estimated_diameter_max_mi": data.get("estimated_diameter", {}).get(
+                    "miles", {}
+                ).get("estimated_diameter_max"),
+                "is_potentially_hazardous_asteroid": data.get(
+                    "is_potentially_hazardous_asteroid"
+                ),
                 "close_approach_date": closest_approach.get("close_approach_date"),
-                "close_approach_date_full": closest_approach.get("close_approach_date_full"),
-                "relative_velocity_km_per_s": closest_approach.get("relative_velocity", {}).get("kilometers_per_second"),
-                "relative_velocity_km_per_h": closest_approach.get("relative_velocity", {}).get("kilometers_per_hour"),
-                "relative_velocity_mi_per_h": closest_approach.get("relative_velocity", {}).get("miles_per_hour"),
-                "miss_distance_km": closest_approach.get("miss_distance", {}).get("kilometers"),
-                "miss_distance_mi": closest_approach.get("miss_distance", {}).get("miles"),
+                "close_approach_date_full": closest_approach.get(
+                    "close_approach_date_full"
+                ),
+                "relative_velocity_km_per_s": closest_approach.get(
+                    "relative_velocity", {}
+                ).get("kilometers_per_second"),
+                "relative_velocity_km_per_h": closest_approach.get(
+                    "relative_velocity", {}
+                ).get("kilometers_per_hour"),
+                "relative_velocity_mi_per_h": closest_approach.get(
+                    "relative_velocity", {}
+                ).get("miles_per_hour"),
+                "miss_distance_km": closest_approach.get("miss_distance", {}).get(
+                    "kilometers"
+                ),
+                "miss_distance_mi": closest_approach.get("miss_distance", {}).get(
+                    "miles"
+                ),
                 "orbiting_body": closest_approach.get("orbiting_body"),
             }
         return {}
@@ -62,6 +95,41 @@ class NEOWatcherSensor(CoordinatorEntity, SensorEntity):
     def icon(self):
         """Return the icon of the sensor."""
         return "mdi:asteroid"
+
+    @property
+    def unit_of_measurement(self):
+        """Return the unit of measurement."""
+        return None
+
+    @callback
+    def _handle_coordinator_update(self) -> None:
+        """Handle updated data from the coordinator."""
+        self.async_write_ha_state()
+
+
+class NEOWatcherRateLimitSensor(CoordinatorEntity, SensorEntity):
+    """Representation of a NEO Watcher rate limit sensor."""
+
+    def __init__(self, coordinator: NeoWatcherCoordinator, header_name: str) -> None:
+        """Initialize the sensor."""
+        super().__init__(coordinator)
+        self._header_name = header_name
+        self._attr_name = f"NEO Watcher {header_name}"
+        self._attr_unique_id = f"neo_watcher_{header_name.lower().replace('-', '_')}"
+        self._attr_attribution = ATTRIBUTION
+        self._attr_native_value = None
+
+    @property
+    def native_value(self):
+        """Return the state of the sensor."""
+        if self.coordinator.headers:
+            return self.coordinator.headers.get(self._header_name)
+        return None
+
+    @property
+    def icon(self):
+        """Return the icon of the sensor."""
+        return "mdi:api"
 
     @property
     def unit_of_measurement(self):

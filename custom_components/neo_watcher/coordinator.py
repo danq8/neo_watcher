@@ -12,6 +12,7 @@ from .const import DOMAIN, CONF_NEO_ID, CONF_API_KEY, SCAN_INTERVAL
 
 _LOGGER = logging.getLogger(__name__)
 
+
 class NeoWatcherCoordinator(DataUpdateCoordinator):
     """Data update coordinator for the NEO Watcher integration."""
 
@@ -19,6 +20,7 @@ class NeoWatcherCoordinator(DataUpdateCoordinator):
         """Initialize the coordinator."""
         self.neo_id = neo_id
         self.api_key = api_key
+        self.headers = None  # Initialize headers attribute
         super().__init__(
             hass,
             _LOGGER,
@@ -32,7 +34,9 @@ class NeoWatcherCoordinator(DataUpdateCoordinator):
             url = f"https://api.nasa.gov/neo/rest/v1/neo/{self.neo_id}?api_key={self.api_key}"
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
+                    self.headers = response.headers  # Store response headers
                     response.raise_for_status()
                     return await response.json()
         except aiohttp.ClientError as err:
             raise UpdateFailed(f"Error communicating with API: {err}") from err
+
