@@ -1,0 +1,11 @@
+{
+    "domain": "neo_watcher",
+    "name": "NEO Watcher",
+    "version": "1.0.0",
+    "documentation": "https://www.home-assistant.io/integrations/sensor",
+    "requirements": ["requests", "aiohttp"],
+    "codeowners": [],
+    "config_flow": true,
+    "iot_class": "cloud_polling"
+  }
+  
