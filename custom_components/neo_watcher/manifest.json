@@ -6,6 +6,7 @@
       ],
     "config_flow": true,
     "documentation": "https://github.com/danq8/hacs_neo_watcher",
+    "icon": "images/icon.png",
     "iot_class": "cloud_polling",
     "issue_tracker": "https://github.com/danq8/hacs_neo_watcher/issues",
     "requirements": ["requests", "aiohttp"],
