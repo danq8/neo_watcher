@@ -4,12 +4,12 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from .const import DOMAIN
 from .coordinator import NeoWatcherCoordinator
-from .const import CONF_NEO_ID, CONF_API_KEY
+from .const import CONF_API_KEY
 import asyncio
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up NEO Watcher from a config entry."""
-    coordinator = NeoWatcherCoordinator(hass, entry.data[CONF_NEO_ID], entry.data[CONF_API_KEY])
+    coordinator = NeoWatcherCoordinator(hass, entry.data[CONF_API_KEY])
     await coordinator.async_config_entry_first_refresh()
 
 
@@ -21,13 +21,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                hass.config_entries.async_forward_entry_unload(entry, "sensor")
-            ]
-        )
-    )
+    unload_ok = all(await asyncio.gather(
+        *[
+            hass.config_entries.async_forward_entry_unload(entry, "sensor")
+         ]
+    ))
     if unload_ok:
         hass.data[DOMAIN].pop(entry.entry_id)
 
