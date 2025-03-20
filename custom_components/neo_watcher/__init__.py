@@ -12,12 +12,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     coordinator = NeoWatcherCoordinator(hass, entry.data[CONF_NEO_ID], entry.data[CONF_API_KEY])
     await coordinator.async_config_entry_first_refresh()
 
-    hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
 
-    # Load the sensor platform
-    hass.async_create_task(
-        hass.config_entries.async_forward_entry_setup(entry, "sensor")
-    )
+    hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator    
+    # Load the sensor platform and wait for it to complete
+    await hass.config_entries.async_forward_entry_setup(entry, "sensor")
 
     return True
 
