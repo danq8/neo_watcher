@@ -6,7 +6,7 @@ from homeassistant.components.sensor import SensorEntity
 from homeassistant.const import ATTR_ATTRIBUTION
 from homeassistant.core import callback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
-from .const import DOMAIN, ATTRIBUTION, CONF_NEO_ID, CONF_API_KEY
+from .const import DOMAIN, ATTRIBUTION,  CONF_API_KEY
 from .coordinator import NeoWatcherCoordinator
 
 _LOGGER = logging.getLogger(__name__)
