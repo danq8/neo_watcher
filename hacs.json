@@ -1,0 +1,10 @@
+{
+    "name": "Proxmox VE",
+    "domains": [
+      "sensor"
+    ],
+    "iot_class": "cloud_polling",
+    "hide_default_branch": false,
+    "homeassistant": "2024.1.0",
+    "render_readme": true
+  }
