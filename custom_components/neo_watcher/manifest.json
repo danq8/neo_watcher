@@ -2,7 +2,7 @@
     "domain": "neo_watcher",
     "name": "NEO Watcher",
     "version": "1.0.0",
-    "documentation": "https://www.home-assistant.io/integrations/sensor",
+    "documentation": "https://github.com/danq8/hacs_neo_watcher",
     "requirements": ["requests", "aiohttp"],
     "codeowners": [
         "@danq8"
