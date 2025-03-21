@@ -96,14 +96,13 @@ class NEOWatcherRateLimitSensor(CoordinatorEntity, SensorEntity):
     def __init__(self, coordinator: NeoWatcherCoordinator, header_name: str, name: str, entity_description: SensorEntityDescription) -> None:
         """Initialize the sensor."""
         self.entity_description = entity_description
-        super().__init__(coordinator.hass, coordinator)
+        super().__init__(coordinator, entity_description)
         self._header_name = header_name
         self._attr_name = name
         self._attr_unique_id = f"neo_watcher_{header_name.lower().replace('-', '_')}"
         self._attr_attribution = ATTRIBUTION
         self._attr_native_value = None
-        self.entity_description = entity_description
-
+        
 
     @property
     def native_value(self) -> str | None:
