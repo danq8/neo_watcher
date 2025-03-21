@@ -102,7 +102,13 @@ class NEOWatcherRateLimitSensor(CoordinatorEntity, SensorEntity):
         self._attr_unique_id = f"neo_watcher_{header_name.lower().replace('-', '_')}"
         self._attr_attribution = ATTRIBUTION
         self._attr_native_value = None
-        
+        self.coordinator = coordinator
+        self._update_native_value()
+
+    def _update_native_value(self):
+        """Update the native value with the header information."""
+        if self.coordinator.headers:
+            self._attr_native_value = self.coordinator.headers.get(self._header_name)
 
     @property
     def native_value(self) -> str | None:
@@ -122,6 +128,5 @@ class NEOWatcherRateLimitSensor(CoordinatorEntity, SensorEntity):
     @callback
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
-        if self.coordinator.headers:
-            self._attr_native_value = self.coordinator.headers.get(self._header_name)
+        self._update_native_value()
         self.async_write_ha_state()
