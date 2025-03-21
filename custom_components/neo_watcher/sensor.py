@@ -2,7 +2,7 @@
 
 import logging
 from typing import Any
-from homeassistant.components.sensor import SensorEntity
+from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
 from homeassistant.const import ATTR_ATTRIBUTION
 from homeassistant.core import callback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
@@ -17,8 +17,8 @@ async def async_setup_entry(hass, config_entry, async_add_entities) -> None:
     coordinator = NeoWatcherCoordinator(hass, config_entry.data[CONF_API_KEY])
     await coordinator.async_config_entry_first_refresh()
     entities = [
-        NEOWatcherRateLimitSensor(coordinator, "X-RateLimit-Limit", "Your NASA RateLimit"),
-        NEOWatcherRateLimitSensor(coordinator, "X-RateLimit-Remaining", "Your NASA RateLimit remaining calls")
+        NEOWatcherRateLimitSensor(coordinator, "X-RateLimit-Limit", "Your NASA RateLimit", SensorEntityDescription(key="rate_limit_limit")),
+        NEOWatcherRateLimitSensor(coordinator, "X-RateLimit-Remaining", "Your NASA RateLimit remaining calls", SensorEntityDescription(key="rate_limit_remaining"))
     ]
     for i in range(min(5, len(coordinator.data))):        
         entities.append(NEOWatcherFeedSensor(coordinator, i, i+1))
@@ -90,9 +90,9 @@ class NEOWatcherFeedSensor(CoordinatorEntity, SensorEntity):
 class NEOWatcherRateLimitSensor(CoordinatorEntity, SensorEntity):
     """Representation of a NEO Watcher rate limit sensor."""
 
-    def __init__(self, coordinator: NeoWatcherCoordinator, header_name: str, name: str) -> None:
+    def __init__(self, coordinator: NeoWatcherCoordinator, header_name: str, name: str, entity_description: SensorEntityDescription) -> None:
         """Initialize the sensor."""
-        super().__init__(coordinator.hass, coordinator)
+        super().__init__(coordinator.hass, coordinator, entity_description)
         self._header_name = header_name
         self._attr_name = name
         self._attr_unique_id = f"neo_watcher_{header_name.lower().replace('-', '_')}"
