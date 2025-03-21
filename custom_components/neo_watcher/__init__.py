@@ -6,6 +6,7 @@ from .const import DOMAIN
 from .coordinator import NeoWatcherCoordinator
 from .const import CONF_API_KEY
 import asyncio
+from homeassistant.components.sensor import SensorEntityDescription
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up NEO Watcher from a config entry."""
