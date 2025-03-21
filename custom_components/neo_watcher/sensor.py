@@ -25,6 +25,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities) -> None:
     async_add_entities(entities)
 
 
+
 class NEOWatcherFeedSensor(CoordinatorEntity, SensorEntity):
     """Representation of a NEO Watcher sensor."""
 
@@ -98,6 +99,7 @@ class NEOWatcherRateLimitSensor(CoordinatorEntity, SensorEntity):
         self._attr_unique_id = f"neo_watcher_{header_name.lower().replace('-', '_')}"
         self._attr_attribution = ATTRIBUTION
         self._attr_native_value = None
+
 
     @property
     def native_value(self) -> str | None:
