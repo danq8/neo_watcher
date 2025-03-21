@@ -84,6 +84,8 @@ class NEOWatcherFeedSensor(CoordinatorEntity, SensorEntity):
     @callback
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
+        if self.coordinator.headers:
+            self._attr_native_value = self.coordinator.headers.get(self._header_name)
         self.async_write_ha_state()
 
 
@@ -102,9 +104,7 @@ class NEOWatcherRateLimitSensor(CoordinatorEntity, SensorEntity):
     @property
     def native_value(self) -> str | None:
         """Return the state of the sensor."""
-        if self.coordinator.headers:
-            return self.coordinator.headers.get(self._header_name)
-        return None
+        return self._attr_native_value
 
     @property
     def icon(self) -> str:
@@ -119,4 +119,6 @@ class NEOWatcherRateLimitSensor(CoordinatorEntity, SensorEntity):
     @callback
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
+        if self.coordinator.headers:
+            self._attr_native_value = self.coordinator.headers.get(self._header_name)
         self.async_write_ha_state()
