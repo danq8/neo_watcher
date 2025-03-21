@@ -16,22 +16,26 @@ async def async_setup_entry(hass, config_entry, async_add_entities) -> None:
     """Set up the NEO Watcher sensor."""
     coordinator = NeoWatcherCoordinator(hass, config_entry.data[CONF_API_KEY])
     await coordinator.async_config_entry_first_refresh()
-    entities = [NEOWatcherRateLimitSensor(coordinator, "X-RateLimit-Limit"),
-                NEOWatcherRateLimitSensor(coordinator, "X-RateLimit-Remaining")]
-    for i in range(min(5, len(coordinator.data))):
-        entities.append(NEOWatcherFeedSensor(coordinator, i))
+    entities = [
+        NEOWatcherRateLimitSensor(coordinator, "X-RateLimit-Limit", "Your NASA RateLimit"),
+        NEOWatcherRateLimitSensor(coordinator, "X-RateLimit-Remaining", "Your NASA RateLimit remaining calls")
+    ]
+    for i in range(min(5, len(coordinator.data))):        
+        entities.append(NEOWatcherFeedSensor(coordinator, i, i+1))
     async_add_entities(entities)
 
 
 class NEOWatcherFeedSensor(CoordinatorEntity, SensorEntity):
     """Representation of a NEO Watcher sensor."""
 
-    def __init__(self, coordinator: NeoWatcherCoordinator, index: int) -> None:
+    def __init__(self, coordinator: NeoWatcherCoordinator, header_name: str, name: str) -> None:
         """Initialize the sensor."""
         super().__init__(coordinator)
         self._index = index
-        self._attr_name = f"NEO Watcher {self.data['name']}"
+        self._rank = rank
+        self._attr_name = f"{self._rank}{self._get_rank_suffix(self._rank)} closest object"
         self._attr_unique_id = f"neo_watcher_feed_{self.data['id']}"
+        self._attr_name = name
         self._attr_attribution = ATTRIBUTION
 
     @property
@@ -40,13 +44,12 @@ class NEOWatcherFeedSensor(CoordinatorEntity, SensorEntity):
         return self.coordinator.data[self._index]
 
     @property
-    def native_value(self) -> str | None:
-        """Return the state of the sensor."""
-        return self.data.get("name")
-
-    @property
     def extra_state_attributes(self) -> dict[str, Any]:
         """Return the state attributes."""
+        def _get_rank_suffix(rank):
+            if 11 <= rank <= 13:
+                return "th"
+            return {1: "st", 2: "nd", 3: "rd"}.get(rank % 10, "th")
         data = self.data
         closest_approach = data.get("close_approach_data", [])[0]
         return {
@@ -65,6 +68,7 @@ class NEOWatcherFeedSensor(CoordinatorEntity, SensorEntity):
             "miss_distance_km": closest_approach.get("miss_distance", {}).get("kilometers"),
             "miss_distance_mi": closest_approach.get("miss_distance", {}).get("miles"),
             "orbiting_body": closest_approach.get("orbiting_body"),
+            "name": data.get("name"),
         }
 
     @property
