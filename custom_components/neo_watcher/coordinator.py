@@ -32,7 +32,7 @@ class NeoWatcherCoordinator(DataUpdateCoordinator):
         """Fetch data from API endpoint and process it."""
         try:
             today = date.today()
-            all_objects = {}
+            all_objects = []
             for i in range(4):
                 start_date = today + timedelta(days=i * 7)
                 end_date = start_date + timedelta(days=6)
@@ -46,13 +46,10 @@ class NeoWatcherCoordinator(DataUpdateCoordinator):
                         data = await response.json()
                         objects = data.get("near_earth_objects", {})
                         for date_str, objects_list in objects.items():
-                            if date_str not in all_objects:
-                                all_objects[date_str] = []
-                            all_objects[date_str].extend(objects_list)
+                            all_objects.extend([obj for obj in objects_list if obj["is_potentially_hazardous_asteroid"]])
 
-            self.near_earth_objects = [obj for date_list in all_objects.values() for obj in date_list if obj["is_potentially_hazardous_asteroid"]]
-            self.near_earth_objects.sort(key=lambda x: float(x["close_approach_data"][0]["miss_distance"]["miles"]))
+            all_objects.sort(key=lambda x: float(x["close_approach_data"][0]["miss_distance"]["miles"]))
 
-            return self.near_earth_objects
+            return all_objects
         except aiohttp.ClientError as err:
             raise UpdateFailed(f"Error communicating with API: {err}") from err
