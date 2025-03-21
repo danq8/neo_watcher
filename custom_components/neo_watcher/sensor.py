@@ -84,8 +84,6 @@ class NEOWatcherFeedSensor(CoordinatorEntity, SensorEntity):
     @callback
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
-        if self.coordinator.headers:
-            self._attr_native_value = self.coordinator.headers.get(self._header_name)
         self.async_write_ha_state()
 
 
