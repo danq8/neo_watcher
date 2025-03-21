@@ -28,15 +28,15 @@ async def async_setup_entry(hass, config_entry, async_add_entities) -> None:
 class NEOWatcherFeedSensor(CoordinatorEntity, SensorEntity):
     """Representation of a NEO Watcher sensor."""
 
-    def __init__(self, coordinator: NeoWatcherCoordinator, header_name: str, name: str) -> None:
+    def __init__(self, coordinator: NeoWatcherCoordinator, index: int, rank: int) -> None:
         """Initialize the sensor."""
         super().__init__(coordinator)
         self._index = index
         self._rank = rank
         self._attr_name = f"{self._rank}{self._get_rank_suffix(self._rank)} closest object"
         self._attr_unique_id = f"neo_watcher_feed_{self.data['id']}"
-        self._attr_name = name
         self._attr_attribution = ATTRIBUTION
+        self._attr_native_value = self.data['name']
 
     @property
     def data(self) -> dict[str, Any]:
@@ -90,11 +90,11 @@ class NEOWatcherFeedSensor(CoordinatorEntity, SensorEntity):
 class NEOWatcherRateLimitSensor(CoordinatorEntity, SensorEntity):
     """Representation of a NEO Watcher rate limit sensor."""
 
-    def __init__(self, coordinator: NeoWatcherCoordinator, header_name: str) -> None:
+    def __init__(self, coordinator: NeoWatcherCoordinator, header_name: str, name: str) -> None:
         """Initialize the sensor."""
         super().__init__(coordinator)
         self._header_name = header_name
-        self._attr_name = f"NEO Watcher {header_name}"
+        self._attr_name = name
         self._attr_unique_id = f"neo_watcher_{header_name.lower().replace('-', '_')}"
         self._attr_attribution = ATTRIBUTION
         self._attr_native_value = None
