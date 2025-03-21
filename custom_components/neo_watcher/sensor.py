@@ -39,6 +39,12 @@ class NEOWatcherFeedSensor(CoordinatorEntity, SensorEntity):
         self._attr_attribution = ATTRIBUTION
         self._attr_native_value = self.data['name']
 
+    def _get_rank_suffix(self, rank):
+        """Return the suffix for the rank."""
+        if 11 <= rank <= 13:
+            return "th"
+        return {1: "st", 2: "nd", 3: "rd"}.get(rank % 10, "th")
+
     @property
     def data(self) -> dict[str, Any]:
         """Return data for this sensor."""
@@ -47,10 +53,6 @@ class NEOWatcherFeedSensor(CoordinatorEntity, SensorEntity):
     @property
     def extra_state_attributes(self) -> dict[str, Any]:
         """Return the state attributes."""
-        def _get_rank_suffix(rank):
-            if 11 <= rank <= 13:
-                return "th"
-            return {1: "st", 2: "nd", 3: "rd"}.get(rank % 10, "th")
         data = self.data
         closest_approach = data.get("close_approach_data", [])[0]
         return {
