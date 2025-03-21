@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/danq8/hacs_neo_watcher/blob/main/icon.png" alt="Near Earth Object Watcher logo" title="Near Earth Object Watcher" align="right" height="60" />
+<img src="https://raw.githubusercontent.com/danq8/hacs_neo_watcher/main/icon.png" alt="Near Earth Object Watcher logo" title="Near Earth Object Watcher" align="right" height="60" />
 
 # Near Earth Object Watcher
 Home Assistant add on to consume NASA's NeoWs (Near Earth Object Web Service) RESTful web service
