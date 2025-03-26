@@ -62,8 +62,22 @@ class NEOWatcherFeedSensor(CoordinatorEntity, SensorEntity):
         """Return data for this sensor."""
         return self.coordinator.data[self._index]
 
+    async def fetch_horizon_data(self, url):
+        """Fetch data from the Horizons API."""
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as response:
+                    response.raise_for_status()
+                    return await response.json()
+        except aiohttp.ClientError as err:
+            _LOGGER.error(f"Error communicating with API: {err}")
+            return None
+        except Exception as err:
+            _LOGGER.error(f"An unexpected error occurred: {err}")
+            return None
+
     @property
-    def extra_state_attributes(self) -> dict[str, Any]:
+    async def extra_state_attributes(self) -> dict[str, Any]:
         """Return the state attributes."""
         data = self.data
         closest_approach = data.get("close_approach_data", [])[0]
@@ -74,23 +88,30 @@ class NEOWatcherFeedSensor(CoordinatorEntity, SensorEntity):
         horizon_url = f"https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27{name_urlencoded}%27"
 
         # New code to fetch and parse data from horizon_url
-        try:
-            async def fetch_horizon_data(url):
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(url) as response:
-                        response.raise_for_status()
-                        return await response.json()
+        horizon_data = await self.fetch_horizon_data(horizon_url)
 
-            horizon_data = self.hass.async_add_executor_job(fetch_horizon_data, horizon_url)
-            horizon_data = self.hass.loop.run_until_complete(horizon_data)
-
+        if horizon_data is None:
+            adist = None
+            argument_of_perihelion_wrt_ecliptic = None
+            perihelion = None
+            magnitude = None
+            epoch = None
+            ecliptic = None
+            perihelion_julian_day = None
+            semi_major_axis = None
+            perihelion_distance = None
+            mean_motion = None
+            inclination_wrt_ecliptic = None
+            longitude_of_ascending_node_wrt_ecliptic = None
+            neo_watcher_orbit_viewer_url = None
+        else:
             result_text = horizon_data.get("result", "")
             
             adist = self._extract_value(result_text, "ADIST=")
             _LOGGER.debug(f"adist value {adist}")
             argument_of_perihelion_wrt_ecliptic = self._extract_value(result_text, "W=")
             _LOGGER.debug(f"argument_of_perihelion_wrt_ecliptic value {argument_of_perihelion_wrt_ecliptic}")
-            perihelion = float(self._extract_value(result_text, "PER=")) * 365.25
+            perihelion = float(self._extract_value(result_text, "PER=")) * 365.25 if self._extract_value(result_text, "PER=") is not None else None
             _LOGGER.debug(f"perihelion value {perihelion}")
             magnitude = self._extract_value(result_text, "MA=")
             _LOGGER.debug(f"magnitude value {magnitude}")
@@ -115,22 +136,6 @@ class NEOWatcherFeedSensor(CoordinatorEntity, SensorEntity):
                 f"https://ssd.jpl.nasa.gov/ov/index.html#no-add-menu=1&elem=ad:{adist},w:{argument_of_perihelion_wrt_ecliptic},label:{quote_plus('('+name_without_brackets+')')},per:{perihelion},ma:{magnitude},epoch:{epoch},e:{ecliptic},tp:{perihelion_julian_day},a:{semi_major_axis},q:{perihelion_distance},n:{mean_motion},i:{inclination_wrt_ecliptic},om:{longitude_of_ascending_node_wrt_ecliptic}"
             )
             _LOGGER.debug(f"neo_watcher_orbit_viewer_url value {neo_watcher_orbit_viewer_url}")
-
-        except (aiohttp.ClientError, Exception) as err:
-            _LOGGER.error(f"Error fetching or parsing data from {horizon_url}: {err}")
-            adist = None
-            argument_of_perihelion_wrt_ecliptic = None
-            perihelion = None
-            magnitude = None
-            epoch = None
-            ecliptic = None
-            perihelion_julian_day = None
-            semi_major_axis = None
-            perihelion_distance = None
-            mean_motion = None
-            inclination_wrt_ecliptic = None
-            longitude_of_ascending_node_wrt_ecliptic = None
-            neo_watcher_orbit_viewer_url = None
 
         return {
             "name": name,
