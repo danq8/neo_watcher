@@ -171,7 +171,10 @@ class NEOWatcherFeedSensor(CoordinatorEntity, SensorEntity):
             
         }
     @property
-    def extra_state_attributes(self) -> dict[str, Any]:
+    def extra_state_attributes(self) -> dict[str, Any] | None:
+        """Return the state attributes."""
+        if self.hass is None:
+            return {}
         """Return the state attributes."""
         return self.hass.async_add_job(self.async_get_extra_state_attributes())
 
