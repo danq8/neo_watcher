@@ -77,7 +77,7 @@ class NEOWatcherFeedSensor(CoordinatorEntity, SensorEntity):
             return None
 
     @property
-    async def extra_state_attributes(self) -> dict[str, Any]:
+    async def async_get_extra_state_attributes(self) -> dict[str, Any]:
         """Return the state attributes."""
         data = self.data
         closest_approach = data.get("close_approach_data", [])[0]
@@ -170,6 +170,10 @@ class NEOWatcherFeedSensor(CoordinatorEntity, SensorEntity):
             "Longitude_of_ascending_node_wrt_ecliptic": longitude_of_ascending_node_wrt_ecliptic,
             
         }
+    @property
+    def extra_state_attributes(self) -> dict[str, Any]:
+        """Return the state attributes."""
+        return self.hass.async_add_job(self.async_get_extra_state_attributes())
 
     def _extract_value(self, text, key):
         """Extract a value from the text based on the key."""
