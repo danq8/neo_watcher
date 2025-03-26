@@ -27,13 +27,16 @@ async def async_setup_entry(hass, config_entry, async_add_entities) -> None:
         NEOWatcherRateLimitSensor(coordinator, "X-RateLimit-Remaining", "Your NASA RateLimit remaining calls", SensorEntityDescription(key="rate_limit_remaining")),
         NEOWatcherTotalObjectsSensor(coordinator)
     ]
+    
+    async_add_entities(entities)
     # Loop around to get the top 6
     _LOGGER.debug(f"Found {len(coordinator.data)} potentially hazardous objects.")
+    feed_entities = []
     for i in range(min(6, len(coordinator.data))):
         _LOGGER.debug(f"Creating NEOWatcherFeedSensor for object at index {i}.")
-        entities.append(NEOWatcherFeedSensor(coordinator, i, i+1))
-    _LOGGER.debug(f"Adding {len(entities)} entities to Home Assistant.")
-    async_add_entities(entities)
+        feed_entities.append(NEOWatcherFeedSensor(coordinator, i, i+1))
+    _LOGGER.debug(f"Adding {len(feed_entities)} entities to Home Assistant.")
+    await async_add_entities(feed_entities)
     _LOGGER.debug("NEO Watcher sensor platform setup completed.")
 
 
@@ -76,7 +79,6 @@ class NEOWatcherFeedSensor(CoordinatorEntity, SensorEntity):
             _LOGGER.error(f"An unexpected error occurred: {err}")
             return None
 
-    @property
     async def async_get_extra_state_attributes(self) -> dict[str, Any]:
         """Return the state attributes."""
         data = self.data
@@ -106,7 +108,7 @@ class NEOWatcherFeedSensor(CoordinatorEntity, SensorEntity):
             neo_watcher_orbit_viewer_url = None
         else:
             result_text = horizon_data.get("result", "")
-            
+
             adist = self._extract_value(result_text, "ADIST=")
             _LOGGER.debug(f"adist value {adist}")
             argument_of_perihelion_wrt_ecliptic = self._extract_value(result_text, "W=")
@@ -168,7 +170,7 @@ class NEOWatcherFeedSensor(CoordinatorEntity, SensorEntity):
             "Mean_motion": mean_motion,
             "Inclination_wrt_ecliptic": inclination_wrt_ecliptic,
             "Longitude_of_ascending_node_wrt_ecliptic": longitude_of_ascending_node_wrt_ecliptic,
-            
+            "name_urlencoded": name_urlencoded,
         }
     @property
     def extra_state_attributes(self) -> dict[str, Any] | None:
@@ -176,7 +178,7 @@ class NEOWatcherFeedSensor(CoordinatorEntity, SensorEntity):
         if self.hass is None:
             return {}
         """Return the state attributes."""
-        return self.hass.async_add_job(self.async_get_extra_state_attributes())
+        return self.hass.async_add_job(self.async_get_extra_state_attributes)
 
     def _extract_value(self, text, key):
         """Extract a value from the text based on the key."""
