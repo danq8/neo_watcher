@@ -1,0 +1,266 @@
+title: NASA NEO Data
+theme: Google Dark Theme
+path: "Neo_Watcher"
+type: sections
+badges: []
+cards: []
+max_columns: 4
+sections:
+  - type: grid
+    cards:
+      - type: markdown
+        content: >-
+          {{states.sensor.neo_watcher_1st_closest_object.name|replace("Neo
+          Watcher", "")|replace("_", "")|replace("closest object", "")}}{%if
+          (state_attr("sensor.neo_watcher_1st_closest_object","is_potentially_hazardous_asteroid"))%}closest
+          potentially hazardous object{%else%}closest object{%endif%}
+
+          {{state_attr("sensor.neo_watcher_1st_closest_object","name")}}
+
+          Closest date:
+          {{state_attr("sensor.neo_watcher_1st_closest_object","close_approach_date_full")}}
+
+          Closest distance:
+          {{"{:,.0f}".format(state_attr("sensor.neo_watcher_1st_closest_object","miss_distance_mi")
+          | int)}} Miles from Earth
+
+          Speed:
+          {{"{:,.0f}".format(state_attr("sensor.neo_watcher_1st_closest_object","relative_velocity_mi_per_h")
+          | int)}} Miles per hour
+
+          Size:
+          {{"{:,.1f}".format(state_attr("sensor.neo_watcher_1st_closest_object","estimated_diameter_min_mi")
+          | float)}} Miles -
+          {{"{:,.1f}".format(state_attr("sensor.neo_watcher_1st_closest_object","estimated_diameter_max_mi")
+          | float)}} Miles across
+
+
+          Full Detail
+
+          {{state_attr("sensor.neo_watcher_1st_closest_object","nasa_jpl_url")}}
+
+
+          Orbit Detail
+
+          {%set x =
+          state_attr("sensor.neo_watcher_1st_closest_object","Neo_Watcher_Orbit_Viewer_URL")-%}
+
+          [{{ x[:80]
+          }}...]({{state_attr("sensor.neo_watcher_1st_closest_object","Neo_Watcher_Orbit_Viewer_URL")}})
+        grid_options:
+          columns: full
+      - type: markdown
+        content: >-
+          {{states.sensor.neo_watcher_4th_closest_object.name|replace("Neo
+          Watcher", "")|replace("_", "")|replace("closest object", "")}}{%if
+          (state_attr("sensor.neo_watcher_4th_closest_object","is_potentially_hazardous_asteroid"))%}closest
+          potentially hazardous object{%else%}closest object{%endif%}
+
+          {{state_attr("sensor.neo_watcher_4th_closest_object","name")}}
+
+          Closest date:
+          {{state_attr("sensor.neo_watcher_4th_closest_object","close_approach_date_full")}}
+
+          Closest distance:
+          {{"{:,.0f}".format(state_attr("sensor.neo_watcher_4th_closest_object","miss_distance_mi")
+          | int)}} Miles from Earth
+
+          Speed:
+          {{"{:,.0f}".format(state_attr("sensor.neo_watcher_4th_closest_object","relative_velocity_mi_per_h")
+          | int)}} Miles per hour
+
+          Size:
+          {{"{:,.1f}".format(state_attr("sensor.neo_watcher_4th_closest_object","estimated_diameter_min_mi")
+          | float)}} Miles -
+          {{"{:,.1f}".format(state_attr("sensor.neo_watcher_4th_closest_object","estimated_diameter_max_mi")
+          | float)}} Miles across
+
+
+          Full Detail
+
+          {{state_attr("sensor.neo_watcher_4th_closest_object","nasa_jpl_url")}}
+
+
+          Orbit Detail
+
+          {%set x =
+          state_attr("sensor.neo_watcher_4th_closest_object","Neo_Watcher_Orbit_Viewer_URL")-%}
+
+          [{{ x[:80]
+          }}...]({{state_attr("sensor.neo_watcher_4th_closest_object","Neo_Watcher_Orbit_Viewer_URL")}})
+        grid_options:
+          columns: full
+  - type: grid
+    cards:
+      - type: markdown
+        content: >
+          {{states.sensor.neo_watcher_2nd_closest_object.name|replace("Neo
+          Watcher", "")|replace("_", "")|replace("closest object", "")}}{%if
+          (state_attr("sensor.neo_watcher_2nd_closest_object","is_potentially_hazardous_asteroid"))%}closest
+          potentially hazardous object{%else%}closest object{%endif%}
+
+          {{state_attr("sensor.neo_watcher_2nd_closest_object","name")}}
+
+          Closest date:
+          {{state_attr("sensor.neo_watcher_2nd_closest_object","close_approach_date_full")}}
+
+          Closest distance:
+          {{"{:,.0f}".format(state_attr("sensor.neo_watcher_2nd_closest_object","miss_distance_mi")
+          | int)}} Miles from Earth
+
+          Speed:
+          {{"{:,.0f}".format(state_attr("sensor.neo_watcher_2nd_closest_object","relative_velocity_mi_per_h")
+          | int)}} Miles per hour
+
+          Size:
+          {{"{:,.1f}".format(state_attr("sensor.neo_watcher_2nd_closest_object","estimated_diameter_min_mi")
+          | float)}} Miles -
+          {{"{:,.1f}".format(state_attr("sensor.neo_watcher_2nd_closest_object","estimated_diameter_max_mi")
+          | float)}} Miles across
+
+
+          Full Detail
+
+          {{state_attr("sensor.neo_watcher_2nd_closest_object","nasa_jpl_url")}}
+
+
+          Orbit Detail
+
+          {%set x =
+          state_attr("sensor.neo_watcher_2nd_closest_object","Neo_Watcher_Orbit_Viewer_URL")-%}
+
+          [{{ x[:80]
+          }}...]({{state_attr("sensor.neo_watcher_2nd_closest_object","Neo_Watcher_Orbit_Viewer_URL")}})
+        grid_options:
+          columns: full
+      - type: markdown
+        content: >-
+          {{states.sensor.neo_watcher_5th_closest_object.name|replace("Neo
+          Watcher", "")|replace("_", "")|replace("closest object", "")}}{%if
+          (state_attr("sensor.neo_watcher_5th_closest_object","is_potentially_hazardous_asteroid"))%}closest
+          potentially hazardous object{%else%}closest object{%endif%}
+
+          {{state_attr("sensor.neo_watcher_5th_closest_object","name")}}
+
+          Closest date:
+          {{state_attr("sensor.neo_watcher_5th_closest_object","close_approach_date_full")}}
+
+          Closest distance:
+          {{"{:,.0f}".format(state_attr("sensor.neo_watcher_5th_closest_object","miss_distance_mi")
+          | int)}} Miles from Earth
+
+          Speed:
+          {{"{:,.0f}".format(state_attr("sensor.neo_watcher_5th_closest_object","relative_velocity_mi_per_h")
+          | int)}} Miles per hour
+
+          Size:
+          {{"{:,.1f}".format(state_attr("sensor.neo_watcher_5th_closest_object","estimated_diameter_min_mi")
+          | float)}} Miles -
+          {{"{:,.1f}".format(state_attr("sensor.neo_watcher_5th_closest_object","estimated_diameter_max_mi")
+          | float)}} Miles across
+
+
+          Full Detail
+
+          {{state_attr("sensor.neo_watcher_5th_closest_object","nasa_jpl_url")}}
+
+
+          Orbit Detail
+
+          {%set x =
+          state_attr("sensor.neo_watcher_5th_closest_object","Neo_Watcher_Orbit_Viewer_URL")-%}
+
+          [{{ x[:80]
+          }}...]({{state_attr("sensor.neo_watcher_5th_closest_object","Neo_Watcher_Orbit_Viewer_URL")}})
+        grid_options:
+          columns: full
+  - type: grid
+    cards:
+      - type: markdown
+        content: >-
+          {{states.sensor.neo_watcher_3rd_closest_object.name|replace("Neo
+          Watcher", "")|replace("_", "")|replace("closest object", "")}}{%if
+          (state_attr("sensor.neo_watcher_3rd_closest_object","is_potentially_hazardous_asteroid"))%}closest
+          potentially hazardous object{%else%}closest object{%endif%}
+
+          {{state_attr("sensor.neo_watcher_3rd_closest_object","name")}}
+
+          Closest date:
+          {{state_attr("sensor.neo_watcher_3rd_closest_object","close_approach_date_full")}}
+
+          Closest distance:
+          {{"{:,.0f}".format(state_attr("sensor.neo_watcher_3rd_closest_object","miss_distance_mi")
+          | int)}} Miles from Earth
+
+          Speed:
+          {{"{:,.0f}".format(state_attr("sensor.neo_watcher_3rd_closest_object","relative_velocity_mi_per_h")
+          | int)}} Miles per hour
+
+          Size:
+          {{"{:,.1f}".format(state_attr("sensor.neo_watcher_3rd_closest_object","estimated_diameter_min_mi")
+          | float)}} Miles -
+          {{"{:,.1f}".format(state_attr("sensor.neo_watcher_3rd_closest_object","estimated_diameter_max_mi")
+          | float)}} Miles across
+
+
+          Full Detail
+
+          {{state_attr("sensor.neo_watcher_3rd_closest_object","nasa_jpl_url")}}
+
+
+          Orbit Detail
+
+          {%set x =
+          state_attr("sensor.neo_watcher_3rd_closest_object","Neo_Watcher_Orbit_Viewer_URL")-%}
+
+          [{{ x[:80]
+          }}...]({{state_attr("sensor.neo_watcher_3rd_closest_object","Neo_Watcher_Orbit_Viewer_URL")}})
+        grid_options:
+          columns: full
+      - type: markdown
+        content: >-
+          {{states.sensor.neo_watcher_6th_closest_object.name|replace("Neo
+          Watcher", "")|replace("_", "")|replace("closest object", "")}}{%if
+          (state_attr("sensor.neo_watcher_6th_closest_object","is_potentially_hazardous_asteroid"))%}closest
+          potentially hazardous object{%else%}closest object{%endif%}
+
+          {{state_attr("sensor.neo_watcher_6th_closest_object","name")}}
+
+          Closest date:
+          {{state_attr("sensor.neo_watcher_6th_closest_object","close_approach_date_full")}}
+
+          Closest distance:
+          {{"{:,.0f}".format(state_attr("sensor.neo_watcher_6th_closest_object","miss_distance_mi")
+          | int)}} Miles from Earth
+
+          Speed:
+          {{"{:,.0f}".format(state_attr("sensor.neo_watcher_6th_closest_object","relative_velocity_mi_per_h")
+          | int)}} Miles per hour
+
+          Size:
+          {{"{:,.1f}".format(state_attr("sensor.neo_watcher_6th_closest_object","estimated_diameter_min_mi")
+          | float)}} Miles -
+          {{"{:,.1f}".format(state_attr("sensor.neo_watcher_6th_closest_object","estimated_diameter_max_mi")
+          | float)}} Miles across
+
+
+          Full Detail
+
+          {{state_attr("sensor.neo_watcher_6th_closest_object","nasa_jpl_url")}}
+
+
+          Orbit Detail
+
+          {%set x =
+          state_attr("sensor.neo_watcher_6th_closest_object","Neo_Watcher_Orbit_Viewer_URL")-%}
+
+          [{{ x[:80]
+          }}...]({{state_attr("sensor.neo_watcher_6th_closest_object","Neo_Watcher_Orbit_Viewer_URL")}})
+        grid_options:
+          columns: full
+header:
+  card:
+    type: markdown
+    text_only: true
+    content: |
+      # NASA DATA
