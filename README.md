@@ -15,7 +15,8 @@ They watch so you don't have to worry.
 <img src="https://raw.githubusercontent.com/danq8/hacs_neo_watcher/main/doc/Example_Page.JPG" alt="Near Earth Object Watcher example page" title="Near Earth Object Watcher example page" align="right" height="500" />
 
 [Download Home Assistant page yaml here](https://raw.githubusercontent.com/danq8/hacs_neo_watcher/main/doc/Example_view.yaml)
-  It takes the data for the next 28 days provided by the NASA Near Earth Object Web Service<br />  It discounts any objects that have not been categorised as "potentially dangerous"<br />    It then picks out the closest 5, creates a sensor for each one,<br />  and fills the attributes including speed, size, how close to earth it will get, and the date that it will be at it's closest.
+
+This component takes the data for the next 28 days provided by the NASA Near Earth Object Web Service<br />  We exclude any objects that have not been categorised as "potentially dangerous"<br />    We then pick out 6 that come the closest, and create a sensor for each one,<br />  and fill the attributes including speed, size, how close to earth it will get, and the date that it will be at it's closest.
 
 # Why create this component?
 
