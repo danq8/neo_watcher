@@ -59,7 +59,7 @@ In the meantime you can install this component by
 
 - Search for NEO Watcher, click on the result, enter your API key and click SUBMIT.
 
-Once initialised you should see 7 new sensors, your allowed API rate limit, how many API calls you have left, and the 5 sensors showing the 5 closest potentially dangerous objects.
+Once initialised you should see 9 new sensors, your allowed API rate limit, how many API calls you have left, how many potentially hazardous objects in the next 14 days found, and the 6 sensors showing the 6 closest potentially dangerous objects.
 
 # Contributing To The Project
 
