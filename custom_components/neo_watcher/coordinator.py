@@ -8,7 +8,7 @@ from homeassistant.helpers.update_coordinator import (
     DataUpdateCoordinator,
     UpdateFailed,
 )
-from .const import DOMAIN, CONF_API_KEY, SCAN_INTERVAL
+from .const import DOMAIN, CONF_API_KEY, SCAN_INTERVAL, CONF_WEEKS_AHEAD
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -16,9 +16,10 @@ _LOGGER = logging.getLogger(__name__)
 class NeoWatcherCoordinator(DataUpdateCoordinator):
     """Data update coordinator for the NEO Watcher integration."""
 
-    def __init__(self, hass: HomeAssistant, api_key: str) -> None:
+    def __init__(self, hass: HomeAssistant, api_key: str, weeks_ahead: int) -> None:
         """Initialize the coordinator."""
         self.api_key = api_key
+        self.weeks_ahead = weeks_ahead # New weeks_ahead attribute
         self.headers = None  # Initialize headers attribute
         self.near_earth_objects = []
         super().__init__(
@@ -34,8 +35,9 @@ class NeoWatcherCoordinator(DataUpdateCoordinator):
         try:
             today = date.today()
             all_objects = []
+            all_ph_objects = []
             _LOGGER.debug(f"Today's date: {today}")
-            for i in range(4):
+            for i in range(self.weeks_ahead): # Use self.weeks_ahead here
                 start_date = today + timedelta(days=i * 7)
                 end_date = start_date + timedelta(days=6)
                 start_date_str = start_date.strftime("%Y-%m-%d")
@@ -54,13 +56,14 @@ class NeoWatcherCoordinator(DataUpdateCoordinator):
                         _LOGGER.debug(f"Number of dates with objects: {len(objects)}")
                         for date_str, objects_list in objects.items():
                             _LOGGER.debug(f"Processing objects for date: {date_str}")
-                            all_objects.extend([obj for obj in objects_list if obj["is_potentially_hazardous_asteroid"]])
+                            all_ph_objects.extend([obj for obj in objects_list if obj["is_potentially_hazardous_asteroid"]])
                             _LOGGER.debug(f"Number of potentially hazardous objects found for {date_str}: {len([obj for obj in objects_list if obj['is_potentially_hazardous_asteroid']])}")
-
-            all_objects.sort(key=lambda x: float(x["close_approach_data"][0]["miss_distance"]["miles"]))
-            _LOGGER.debug(f"Total number of potentially hazardous objects found: {len(all_objects)}")
+                            all_objects.extend(objects_list)
+            self.near_earth_objects = all_objects
+            all_ph_objects.sort(key=lambda x: float(x["close_approach_data"][0]["miss_distance"]["miles"]))
+            _LOGGER.debug(f"Total number of potentially hazardous objects found: {len(all_ph_objects)}")
             _LOGGER.debug("Data update process completed successfully.")
-            return all_objects
+            return all_ph_objects
         except aiohttp.ClientError as err:
             _LOGGER.error(f"Error communicating with API: {err}")
             raise UpdateFailed(f"Error communicating with API: {err}") from err

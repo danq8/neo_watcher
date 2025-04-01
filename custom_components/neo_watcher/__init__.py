@@ -5,7 +5,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from .const import DOMAIN
 from .coordinator import NeoWatcherCoordinator
-from .const import CONF_API_KEY
+from .const import CONF_API_KEY, CONF_WEEKS_AHEAD
 import asyncio
 
 _LOGGER = logging.getLogger(__name__)
@@ -15,7 +15,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up NEO Watcher from a config entry."""
     _LOGGER.debug("Setting up NEO Watcher integration.")
     _LOGGER.debug(f"Config entry data: {entry.data}")
-    coordinator = NeoWatcherCoordinator(hass, entry.data[CONF_API_KEY])
+    coordinator = NeoWatcherCoordinator(hass, entry.data[CONF_API_KEY], entry.data[CONF_WEEKS_AHEAD]) #Added weeks_ahead
     _LOGGER.debug("Created NeoWatcherCoordinator instance.")
     await coordinator.async_config_entry_first_refresh()
     _LOGGER.debug("Coordinator first refresh completed.")

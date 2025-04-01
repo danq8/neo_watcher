@@ -11,13 +11,23 @@ from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.exceptions import HomeAssistantError
 
-from .const import DOMAIN, CONF_API_KEY
+from .const import DOMAIN, CONF_API_KEY, CONF_WEEKS_AHEAD, DEFAULT_WEEKS_AHEAD
 
 _LOGGER = logging.getLogger(__name__)
 
 STEP_USER_DATA_SCHEMA = vol.Schema(
     {
         vol.Required(CONF_API_KEY): str,
+        vol.Optional(
+            vol.Schema(
+                {
+                    vol.Optional(CONF_WEEKS_AHEAD, default=DEFAULT_WEEKS_AHEAD): vol.All(
+                        vol.Coerce(int), vol.Range(min=1, max=260)
+                    )
+                }
+            ),
+            description={"suggested_value": DEFAULT_WEEKS_AHEAD, "description": "Number of weeks to look ahead (maximum 5 years / 260 weeks)"},
+        ): object,
     }
 )
 
