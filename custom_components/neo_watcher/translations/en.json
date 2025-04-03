@@ -1,0 +1,20 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "data": {
+          "api_key": "Your NASA API Key",
+          "weeks_ahead": "How many weeks to look ahead"
+        },
+        "data_description": {
+          "weeks_ahead": "Max 2 years. May cause slower startup of HA."
+        },
+        "title": "NEO Watcher"
+        
+      }
+    },
+    "abort": {
+      "already_configured": "Device is already configured"
+    }
+  }
+}

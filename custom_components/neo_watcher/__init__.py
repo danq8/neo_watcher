@@ -3,9 +3,8 @@
 import logging
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from .const import DOMAIN
+from .const import DOMAIN, CONF_API_KEY, CONF_WEEKS_AHEAD, DEFAULT_WEEKS_AHEAD
 from .coordinator import NeoWatcherCoordinator
-from .const import CONF_API_KEY, CONF_WEEKS_AHEAD
 import asyncio
 
 _LOGGER = logging.getLogger(__name__)
@@ -15,7 +14,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up NEO Watcher from a config entry."""
     _LOGGER.debug("Setting up NEO Watcher integration.")
     _LOGGER.debug(f"Config entry data: {entry.data}")
-    coordinator = NeoWatcherCoordinator(hass, entry.data[CONF_API_KEY], entry.data[CONF_WEEKS_AHEAD]) #Added weeks_ahead
+    weeks_ahead = entry.data.get(CONF_WEEKS_AHEAD, DEFAULT_WEEKS_AHEAD)
+    coordinator = NeoWatcherCoordinator(hass, entry.data[CONF_API_KEY], weeks_ahead)
     _LOGGER.debug("Created NeoWatcherCoordinator instance.")
     await coordinator.async_config_entry_first_refresh()
     _LOGGER.debug("Coordinator first refresh completed.")
@@ -27,6 +27,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     _LOGGER.debug("Forwarding entry setup to sensor platform.")
     await hass.config_entries.async_forward_entry_setups(entry, ["sensor"])
     _LOGGER.debug("Sensor platform setup completed.")
+    coordinator.async_update_listeners()
 
     _LOGGER.debug("NEO Watcher integration setup completed successfully.")
     return True
