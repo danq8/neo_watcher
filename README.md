@@ -12,11 +12,14 @@ They watch so you don't have to worry.
 
 # What this component does
 
-<img src="https://raw.githubusercontent.com/danq8/hacs_neo_watcher/main/doc/Example_Page.JPG" alt="Near Earth Object Watcher example page" title="Near Earth Object Watcher example page" align="right" height="500" />
+<img src="https://raw.githubusercontent.com/danq8/hacs_neo_watcher/main/doc/Example_Page.JPG" alt="Near Earth Object Watcher example page" title="Near Earth Object Watcher example page" height="500" />
 
-[Download Home Assistant page yaml here](https://raw.githubusercontent.com/danq8/hacs_neo_watcher/main/doc/Example_view.yaml)
+<a href="https://raw.githubusercontent.com/danq8/hacs_neo_watcher/main/doc/Example_view.yaml" target=”_blank”>Download the Home Assistant example page yaml here</a><br/>
 
-This component takes the data for the next 28 days provided by the NASA Near Earth Object Web Service<br />  We exclude any objects that have not been categorised as "potentially dangerous"<br />    We then pick out 6 that come the closest, and create a sensor for each one,<br />  and fill the attributes including speed, size, how close to earth it will get, and the date that it will be at it's closest.
+This component takes the data for the next 1 week (up to 2 years) provided by the NASA Near Earth Object Web Service<br />  For your chosen time period, it can show you anything from the top 1 to the top 20 "potentially dangerous" and non "potentially dangerous" objects passing by Earth.<br />There is also the option of watching specific NEOs (like everyone's favourite "2024 YR4").<br />  The sensors contain attributes including speed, size, how close to earth it will get, and the date that it will be at it's closest, or the next time it will be close.<br />The orbit detail is especially fascinating as it gives you an incredible 4D model that shows you how the object will pass through our solar system over time. (That's NASA's work!)
+
+<img src="https://raw.githubusercontent.com/danq8/hacs_neo_watcher/main/doc/NASA_NEO_Orbital_Viewer.JPG" alt="NASA Near Earth Object Orbital Viewer" title="NASA's Near Earth Object Orbital Viewer" height="300" />
+
 
 # Why create this component?
 
@@ -59,7 +62,26 @@ In the meantime you can install this component by
 
 - Search for NEO Watcher, click on the result, enter your API key and click SUBMIT.
 
-Once initialised you should see 9 new sensors, your allowed API rate limit, how many API calls you have left, how many potentially hazardous objects in the next 14 days found, and the 6 sensors showing the 6 closest potentially dangerous objects.
+Once initialised you should see the new sensors. There will be one showing the integration stats, along with how ever many NEOs you've selected to watch.
+
+# Configuration
+
+Simply go to Settings --> "Devices and services" --> "Add integration"<br/>choose the NEO Watcher integration<br/>
+You will then see this page:<br/>
+<img src="https://raw.githubusercontent.com/danq8/hacs_neo_watcher/main/doc/Config_Page_1.JPG" alt="NEO Watcher 1st configuration page" title="NEO Watcher 1st configuration page" height="250" /><br/>
+Paste in your NASA API key,<br/>choose between watching a particular object or having the top (closest) objects,<br/>then choose what hour of day you want the data refreshed.<br/><br/>
+<table><tr><td>
+Top NEOs:<br/>
+<img src="https://raw.githubusercontent.com/danq8/hacs_neo_watcher/main/doc/Config_Page_2a.JPG" alt="NEO Watcher 2nd configuration page" title="NEO Watcher 2nd configuration page" height="250" /><br/>
+Here you'll be able to choose how far to look into the future in weeks (Maximum 2 years).<br/>
+As well as whether you just want the top 1 objects (potentially dangerous and non-potentially dangerous) all the way up to the top 20 for each.<br/></td><td>
+Watch a specific NEO:<br/>
+<img src="https://raw.githubusercontent.com/danq8/hacs_neo_watcher/main/doc/Config_Page_2b.JPG" alt="NEO Watcher 3rd configuration page" title="NEO Watcher 3rd configuration page" height="250" /><br/>
+Here you'll simply need to type in the name or designation of the object.<br/>(You can find these on NASA's NEO page: [https://cneos.jpl.nasa.gov/ca/](https://cneos.jpl.nasa.gov/ca/)<br/>
+  </td></tr></table>
+Click submit and the data will start to load<br/>
+
+
 
 # Contributing To The Project
 
@@ -69,7 +91,7 @@ Once initialised you should see 9 new sensors, your allowed API rate limit, how 
 
 There are several ways of contributing to this project, they include:
 
-- Suggesting new sensors as a feature request
+- Suggesting new sensors or NEO information as a feature request
 
   using this link: [Request a feature](https://github.com/danq8/hacs_neo_watcher/issues/new?template=FEATURE-REQUEST.yml)
 
@@ -89,3 +111,13 @@ This project uses the MIT Licence, for more details see the <a href="/doc/LICENS
 # Showing Your Appreciation
 
 If you like this project, please give it a star on [GitHub](https://github.com/danq8/hacs_neo_watcher)
+
+# My appreciation
+
+My appreciation goes out to NASA,<br/>
+and especially the SpaceRocks Team: David Greenfield, Arezu Sarvestani, Jason English and Peter Baunach.<br/>
+[https://github.com/SpaceRocks/](https://github.com/SpaceRocks/)<br/><br/>
+I have to mention the amazing work of the Home Assistant team [https://www.home-assistant.io/](https://www.home-assistant.io/)<br/>
+And the HACS team [https://www.hacs.xyz/](https://www.hacs.xyz/)<br/><br/>
+Also, I have to say a big thanks to Google Gemini, without whose help I couldn't have done it.<br/>Gemini was a game collaborator, but did go off on a few tangents,<br/> telling me on a few occasions that they were certain, certain, certain, certain that this time they had understood the errors from the logs, the hints and documentation I'd provided and that the new, new, new, new suggestion would be the right one.<br/>I'd liken working with Gemini 2.5 with walking a puppy in a park for the first time. Full of enthusiasm and energy, but a little too focused on the strange new bug crawling around on the ground, rather than on me calling it back to safety.<br/>Between us we got the job done, and for that I'm grateful.<br/>
+[https://gemini.google.com/app](https://gemini.google.com/app)
