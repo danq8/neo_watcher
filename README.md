@@ -116,8 +116,8 @@ If you like this project, please give it a star on [GitHub](https://github.com/d
 
 My appreciation goes out to NASA,<br/>
 and especially the SpaceRocks Team: David Greenfield, Arezu Sarvestani, Jason English and Peter Baunach.<br/>
-[https://github.com/SpaceRocks/](https://github.com/SpaceRocks/)<br/>
+[https://github.com/SpaceRocks/](https://github.com/SpaceRocks/)<br/><br/>
 I have to mention the amazing work of the Home Assistant team [https://www.home-assistant.io/](https://www.home-assistant.io/)<br/>
-And the HACS team [https://www.hacs.xyz/](https://www.hacs.xyz/)<br/>
-Also, I have to say a big thanks to Google Gemini, without whose help I couldn't have done it.<br/>
+And the HACS team [https://www.hacs.xyz/](https://www.hacs.xyz/)<br/><br/>
+Also, I have to say a big thanks to Google Gemini, without whose help I couldn't have done it.<br/>Gemini was a game collaborator, but did go off on a few tangents,<br/> telling me on a few occasions that they were certain, certain, certain, certain that this time they had understood the errors from the logs, the hints and documentation I'd provided and that the new, new, new, new suggestion would be the right one.<br/>I'd liken working with Gemini 2.5 with walking a puppy in a park for the first time. Full of enthusiasm and energy, but a little too focused on the strange new bug crawling around on the ground, rather than on me calling it back to safety.<br/>Between us we got the job done, and for that I'm grateful.<br/>
 [https://gemini.google.com/app](https://gemini.google.com/app)
