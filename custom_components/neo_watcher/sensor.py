@@ -454,7 +454,7 @@ class NEOWatcherSpecificSensor(CoordinatorEntity, SensorEntity):
         """Fetch and set the extra state attributes."""
         encoded_neo = quote(self.specific_neo)
         neo_url = f"http://api.nasa.gov/neo/rest/v1/neo/{encoded_neo}?api_key={self.coordinator.api_key}"
-        _LOGGER.debug(f"Fetching data for specific NEO URL: {neo_url}")
+        #_LOGGER.debug(f"Fetching data for specific NEO URL: {neo_url}")
         neo_data = await self.fetch_neo_data(neo_url)
         self._neo_data = neo_data #Store the data
         if neo_data is None:

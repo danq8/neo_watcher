@@ -68,7 +68,7 @@ class NeoWatcherCoordinator(DataUpdateCoordinator):
             if self.specific_neo:
                 # Fetch data for specific NEO
                 url = f"http://api.nasa.gov/neo/rest/v1/neo/{quote(self.specific_neo)}?api_key={self.api_key}"
-                _LOGGER.debug(f"Fetching data for specific NEO: {url}")
+                _LOGGER.debug(f"Fetching data for specific NEO: {self.specific_neo}")
                 async with aiohttp.ClientSession() as session:
                     async with session.get(url) as response:
                         self.headers = response.headers

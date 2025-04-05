@@ -4,13 +4,13 @@
   "codeowners": [
     "@danq8"
   ],
-  "version": "1.0.0",
-  "documentation": "https://github.com/yourusername/hacs_neo_watcher",
-  "issue_tracker": "https://github.com/yourusername/hacs_neo_watcher/issues",
-  "dependencies": [],
   "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/yourusername/hacs_neo_watcher",
   "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/yourusername/hacs_neo_watcher/issues",
   "requirements": [
     "aiohttp"
-  ]
+  ],
+  "version": "1.0.0"
 }
