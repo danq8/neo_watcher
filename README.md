@@ -12,9 +12,9 @@ They watch so you don't have to worry.
 
 # What this component does
 
-<img src="https://raw.githubusercontent.com/danq8/hacs_neo_watcher/main/doc/Example_Page.JPG" alt="Near Earth Object Watcher example page" title="Near Earth Object Watcher example page" align="right" height="500" />
-<br/>
-[Download the Home Assistant example page yaml here](https://raw.githubusercontent.com/danq8/hacs_neo_watcher/main/doc/Example_view.yaml)
+<img src="https://raw.githubusercontent.com/danq8/hacs_neo_watcher/main/doc/Example_Page.JPG" alt="Near Earth Object Watcher example page" title="Near Earth Object Watcher example page" height="500" />
+
+<a href="https://raw.githubusercontent.com/danq8/hacs_neo_watcher/main/doc/Example_view.yaml" target=”_blank”>Download the Home Assistant example page yaml here</a><br/>
 
 This component takes the data for the next 1 week (up to 2 years) provided by the NASA Near Earth Object Web Service<br />  For your chosen time period, it can show you anything from the top 1 to the top 20 "potentially dangerous" and non "potentially dangerous" objects passing by Earth.<br />There is also the option of watching specific NEOs (like everyone's favourite "2024 YR4").<br />  The sensors contain attributes including speed, size, how close to earth it will get, and the date that it will be at it's closest, or the next time it will be close.<br />The orbit detail is especially fascinating as it gives you an incredible 4D model that shows you how the object will pass through our solar system over time. (That's NASA's work!)
 
