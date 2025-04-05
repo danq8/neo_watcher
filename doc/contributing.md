@@ -16,11 +16,7 @@ There are several ways of contributing to this project, including:
 
 In GitHub, navigate to the repository [homepage](https://github.com/danq8/hacs_neo_watcher). Click the `fork` button at the top-right side of the page to fork the repository.
 
-![fork](/images/wcs_fork_btn.png)
-
 Navigate to your fork's homepage, click the `code` button and copy the url.
-
-![code](/images/wcs_code_btn.png)
 
 On your local machine, open a terminal and navigate to the location where you want the cloned directory. Type `git clone` and paste in the url copied earlier. It should look something like this, but with your username replacing `YOUR-GITHUB-USERNAME`:
 
