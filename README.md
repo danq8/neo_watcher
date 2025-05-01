@@ -1,8 +1,8 @@
-<img src="https://raw.githubusercontent.com/danq8/hacs_neo_watcher/main/icon.png" alt="Near Earth Object Watcher logo" title="Near Earth Object Watcher" align="right" height="60" />
+<img src="https://raw.githubusercontent.com/danq8/neo_watcher/main/icon.png" alt="Near Earth Object Watcher logo" title="Near Earth Object Watcher" align="right" height="60" />
 
 # Near Earth Object Watcher
 
-![GitHub Release](https://img.shields.io/github/v/release/danq8/hacs_neo_watcher)
+![GitHub Release](https://img.shields.io/github/v/release/danq8/neo_watcher)
 
 **A custom component for Home Assistant that retrieves NEO data from NASA.**
 
@@ -13,12 +13,12 @@ They watch, so you don't have to worry.
 # What this component does
 For each Near Earth Object you choose to track, a link is created to NASA's NEO Orbital Viewer,<br/>which is especially fascinating as it gives you an incredible 4D model that shows you how the object will pass through our solar system over time. <br/>(That's NASA's work!)
 
-<img src="https://raw.githubusercontent.com/danq8/hacs_neo_watcher/main/doc/NASA_NEO_Orbital_Viewer.JPG" alt="NASA Near Earth Object Orbital Viewer" title="NASA's Near Earth Object Orbital Viewer" height="300" />
+<img src="https://raw.githubusercontent.com/danq8/neo_watcher/main/doc/NASA_NEO_Orbital_Viewer.JPG" alt="NASA Near Earth Object Orbital Viewer" title="NASA's Near Earth Object Orbital Viewer" height="300" />
 
 An example of how to display the information on a page is given here:
-<img src="https://raw.githubusercontent.com/danq8/hacs_neo_watcher/main/doc/Example_Page.JPG" alt="Near Earth Object Watcher example page" title="Near Earth Object Watcher example page" height="500" />
+<img src="https://raw.githubusercontent.com/danq8/neo_watcher/main/doc/Example_Page.JPG" alt="Near Earth Object Watcher example page" title="Near Earth Object Watcher example page" height="500" />
 
-<a href="https://raw.githubusercontent.com/danq8/hacs_neo_watcher/main/doc/Example_view.yaml" target=”_blank”>Download this example Home Assistant page yaml here</a><br/>
+<a href="https://raw.githubusercontent.com/danq8/neo_watcher/main/doc/Example_view.yaml" target=”_blank”>Download this example Home Assistant page yaml here</a><br/>
 
 This component takes the data for the next 1 week (up to 2 years) provided by the NASA Near Earth Object Web Service<br />  For your chosen time period, it can show you anything from the top 1 to the top 20 "potentially dangerous" and non "potentially dangerous" objects passing by Earth.<br />There is also the option of watching specific NEOs (like everyone's favourite "2024 YR4").<br />  The sensors contain attributes including speed, size, how close to earth it will get, and the date that it will be at it's closest, or the next time it will be close.<br />
 
@@ -61,11 +61,11 @@ Have [HACS](https://hacs.xyz/) installed on your Home Assistant.
 * Click Install on the `NEO Watcher` integration.
 * Restart Home Assistant.
 > [!NOTE]
-> If the button above doesn't work, add `https://github.com/danq8/hacs_neo_watcher` as a custom repository with a type of Integration in HACS.
+> If the button above doesn't work, add `https://github.com/danq8/neo_watcher` as a custom repository with a type of Integration in HACS.
 
 <details><summary>Manual installation</summary>
  
-* Copy `neo_watcher`  folder from [latest release](https://github.com/danq8/hacs_neo_watcher/releases/latest) to [`custom_components` folder](https://developers.home-assistant.io/docs/creating_integration_file_structure/#where-home-assistant-looks-for-integrations) in your config directory.
+* Copy `neo_watcher`  folder from [latest release](https://github.com/danq8/neo_watcher/releases/latest) to [`custom_components` folder](https://developers.home-assistant.io/docs/creating_integration_file_structure/#where-home-assistant-looks-for-integrations) in your config directory.
 * Restart the Home Assistant.
 * go to Settings --> Devices & services, and click on "+ ADD INTEGRATION"
 * Search for NEO Watcher, click on the result, enter your API key and click SUBMIT.
@@ -76,16 +76,16 @@ Have [HACS](https://hacs.xyz/) installed on your Home Assistant.
 
 Simply go to Settings --> "Devices and services" --> "Add integration"<br/>choose the NEO Watcher integration<br/>
 You will then see this page:<br/>
-<img src="https://raw.githubusercontent.com/danq8/hacs_neo_watcher/main/doc/Config_Page_1.JPG" alt="NEO Watcher 1st configuration page" title="NEO Watcher 1st configuration page" height="250" /><br/>
+<img src="https://raw.githubusercontent.com/danq8/neo_watcher/main/doc/Config_Page_1.JPG" alt="NEO Watcher 1st configuration page" title="NEO Watcher 1st configuration page" height="250" /><br/>
 Paste in your NASA API key,<br/>choose between watching a particular object or having the top (closest) objects,<br/>then choose what hour of day you want the data refreshed.<br/><br/>
 
 <details><summary>Configure Top NEOs</summary>
-<img src="https://raw.githubusercontent.com/danq8/hacs_neo_watcher/main/doc/Config_Page_2a.JPG" alt="NEO Watcher 2nd configuration page" title="NEO Watcher 2nd configuration page" height="250" /><br/>
+<img src="https://raw.githubusercontent.com/danq8/neo_watcher/main/doc/Config_Page_2a.JPG" alt="NEO Watcher 2nd configuration page" title="NEO Watcher 2nd configuration page" height="250" /><br/>
 Here you'll be able to choose how far to look into the future in weeks (Maximum 2 years).<br/>
 As well as whether you just want just the first closest top objects (potentially dangerous and non-potentially dangerous) all the way up to the top 20 objects.
 </details>
 <details><summary>Watch a specific NEO</summary>
-<img src="https://raw.githubusercontent.com/danq8/hacs_neo_watcher/main/doc/Config_Page_2b.JPG" alt="NEO Watcher 3rd configuration page" title="NEO Watcher 3rd configuration page" height="250" /><br/>
+<img src="https://raw.githubusercontent.com/danq8/neo_watcher/main/doc/Config_Page_2b.JPG" alt="NEO Watcher 3rd configuration page" title="NEO Watcher 3rd configuration page" height="250" /><br/>
 Here you'll simply need to type in the name or designation of the object.<br/>(You can find these on NASA's NEO page: [https://cneos.jpl.nasa.gov/ca/](https://cneos.jpl.nasa.gov/ca/)<br/>
 </details>
 Click submit and the data will start to load<br/>
@@ -97,14 +97,14 @@ Once initialised you should see the new sensors. There will be one showing the i
  
 <details><summary>Contributing To The Project</summary>
 ![python badge](https://img.shields.io/badge/Made%20with-Python-orange)
-![github contributors](https://img.shields.io/github/contributors/danq8/hacs_neo_watcher?color=orange)
-![last commit](https://img.shields.io/github/last-commit/danq8/hacs_neo_watcher?color=orange)
+![github contributors](https://img.shields.io/github/contributors/danq8/neo_watcher?color=orange)
+![last commit](https://img.shields.io/github/last-commit/danq8/neo_watcher?color=orange)
 
 There are several ways of contributing to this project, they include:
 
 - Suggesting new sensors or NEO information as a feature request
 
-  using this link: [Request a feature](https://github.com/danq8/hacs_neo_watcher/issues/new?template=FEATURE-REQUEST.yml)
+  using this link: [Request a feature](https://github.com/danq8/neo_watcher/issues/new?template=FEATURE-REQUEST.yml)
 
 
 - Adding new sensors
@@ -122,7 +122,7 @@ This project uses the MIT Licence, for more details see the <a href="/doc/LICENS
 
 # Showing your appreciation
 
-If you like this project, please give it a star on [GitHub](https://github.com/danq8/hacs_neo_watcher)
+If you like this project, please give it a star on [GitHub](https://github.com/danq8/neo_watcher)
 
 # My appreciation
 
