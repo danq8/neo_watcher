@@ -4,7 +4,7 @@
 
 ![python badge](https://img.shields.io/badge/Made%20with-Python-orange)
 ![github contributors](https://img.shields.io/github/contributors/danq8/hacs_neo_watcher?color=orange)
-![last commit](https://img.shields.io/github/last-commit/danq8/hacs_neo_watcher?color=orange)
+![last commit](https://img.shields.io/github/last-commit/danq8/neo_watcher?color=orange)
 
 There are several ways of contributing to this project, including:
 
