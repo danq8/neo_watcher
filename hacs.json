@@ -1,4 +1,5 @@
 {
+    "hacs": "1.6.0",
     "name": "Neo Watcher",
     "homeassistant": "2025.4.1",
     "render_readme": true
